@@ -16,7 +16,7 @@ CREATE TABLE address (
     delivery_zipcode VARCHAR(20) NOT NULL
 );
 
-CREATE TABLE products (
+CREATE TABLE items (
     item_id VARCHAR(10) PRIMARY KEY,
     sku VARCHAR(20) UNIQUE NOT NULL,
     item_name VARCHAR(100) NOT NULL,
@@ -41,19 +41,19 @@ CREATE TABLE orders (
     delivery BOOLEAN DEFAULT FALSE,
     customer_id INTEGER NOT NULL REFERENCES customers (customer_id),
     address_id INTEGER NOT NULL REFERENCES address (address_id),
-    item_id VARCHAR(10) NOT NULL REFERENCES products (item_id)
+    item_id VARCHAR(10) NOT NULL REFERENCES items (item_id)
 );
 
 CREATE TABLE recipe (
     row_id SERIAL PRIMARY KEY,
-    recipe_id VARCHAR(20) NOT NULL REFERENCES products (sku),
+    recipe_id VARCHAR(20) NOT NULL REFERENCES items (sku),
     ing_id VARCHAR(10) NOT NULL REFERENCES ingredient (ing_id),
     quantity INTEGER NOT NULL CHECK (quantity > 0)
 );
 
 CREATE TABLE inventory (
     inv_id SERIAL PRIMARY KEY,
-    item_id VARCHAR(10) NOT NULL REFERENCES products (item_id),
+    item_id VARCHAR(10) NOT NULL REFERENCES items (item_id),
     quantity INTEGER NOT NULL CHECK (quantity >= 0)
 );
 
